@@ -1,0 +1,23 @@
+{
+  "name": "express-server-proj",
+  "version": "1.0.0",
+  "description": "First Express server project using Node.js ",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a-levitt/express-server-proj.git"
+  },
+  "author": "alevitt",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/a-levitt/express-server-proj/issues"
+  },
+  "homepage": "https://github.com/a-levitt/express-server-proj#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
