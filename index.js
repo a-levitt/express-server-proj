@@ -18,7 +18,7 @@ app.get("/jokes/:id", (req, res) => {
     try {
         res.json(foundJoke);
     } catch {
-
+        res.json("404 - No such id");
     }
     
 });
@@ -29,13 +29,21 @@ app.get("/filter", (req, res) => {
     try {
         res.json(filteredActivities);
     } catch {
-        
+
     }
     
 });
 
 
-//app.post()
+app.post("/jokes", (req, res) => {
+    const newJoke = {
+        id: jokes.length + 1,
+        jokeText: req.body.text,
+        jokeType: req.body.type
+    };
+    jokes.push(newJoke);
+    res.json(newJoke);
+});
 
 //app.put
 
