@@ -15,22 +15,21 @@ app.get("/random", (req, res) => {
 app.get("/jokes/:id", (req, res) => {
     const id = parseInt(req.params.id);
     const foundJoke = jokes.find((joke) => joke.id === id);
-    try {
+    const searchIndex = jokes.findIndex((joke) => joke.id === id);
+    if (searchIndex > -1) {
         res.json(foundJoke);
-    } catch {
-        res.json("404 - No such id");
+    } else {
+      res
+        .status(404)
+        .json({ error: `Joke with id: ${id} not found.` });
     }
-    
-});
+  });
 
 app.get("/filter", (req, res) => {
     const type = req.query.type;
     const filteredActivities = jokes.filter((joke) => joke.jokeType === type);
-    try {
-        res.json(filteredActivities);
-    } catch {
 
-    }
+    res.json(filteredActivities);
     
 });
 
@@ -72,11 +71,30 @@ app.patch("/jokes/:id", (req, res) => {
     res.json(updatedJoke);
 });
 
-//app.patch
+app.delete("/jokes/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    const searchIndex = jokes.findIndex((joke) => joke.id === id);
+    if (searchIndex > -1) {
+      jokes.splice(searchIndex, 1);
+      res.sendStatus(200);
+    } else {
+      res
+        .status(404)
+        .json({ error: `Joke with id: ${id} not found. No jokes were deleted.` });
+    }
+  });
 
-//app.delete
-
-//app.delete
+  app.delete("/all", (req, res) => {
+    const userKey = req.query.key;
+    if (userKey === masterKey) {
+      jokes = [];
+      res.sendStatus(200);
+    } else {
+      res
+        .status(404)
+        .json({ error: `You are not authorised to perform this action.` });
+    }
+  });
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}.`);
