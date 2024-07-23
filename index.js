@@ -5,20 +5,34 @@ const app = express();
 const port = 3000;
 const masterKey = "4VGP2DN-6EWM4SJ-N6FGRHV-Z3PR3TT";
 
-app.arguments(express.urlencoded({extended: true}));
+app.use(express.urlencoded({extended: true}));
 
 app.get("/random", (req, res) => {
     const randomIndex = Math.floor(Math.random() * jokes.length);
     res.json(jokes[randomIndex]);
 });
 
-// app.get("/about", (req, res) => {
-//     res.send("<h1>About me.</h1>");
-// });
+app.get("/jokes/:id", (req, res) => {
+    const id = parseInt(req.params.id);
+    const foundJoke = jokes.find((joke) => joke.id === id);
+    try {
+        res.json(foundJoke);
+    } catch {
 
-// app.get("/contact", (req, res) => {
-//     res.send("<h1>Contacts.</h1>");
-// });
+    }
+    
+});
+
+app.get("/filter", (req, res) => {
+    const type = req.query.type;
+    const filteredActivities = jokes.filter((joke) => joke.jokeType === type);
+    try {
+        res.json(filteredActivities);
+    } catch {
+        
+    }
+    
+});
 
 
 //app.post()
